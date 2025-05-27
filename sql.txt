@@ -1,0 +1,259 @@
+CREATE TABLE `journal` (
+  `name` varchar(100) NOT NULL PRIMARY KEY,
+  `frequency` enum('monthly','bi-monthly','quarterly','semi-annual','annual') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `journal` (`name`, `frequency`) VALUES
+('Cloud Computing Journal', 'annual'),
+('Expert Systems Journal', 'bi-monthly'),
+('Journal Of Artificial Intelligence', 'monthly'),
+('Software Engineering Journal', 'quarterly'),
+('Sustainability', 'semi-annual');
+
+
+CREATE TABLE `keywords` (
+  `keywid` int(5) NOT NULL PRIMARY KEY,
+  `keyword` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `keywords` (`keywid`, `keyword`) VALUES
+(1, 'Cloud service providers'),
+(2, 'Public and Private cloud'),
+(3, 'Hybrid  cloud'),
+(4, 'Multi-cloud'),
+(5, 'Design and Development of Expert Systems'),
+(6, 'The Inference Engine'),
+(7, 'Rule-based Expert Systems'),
+(8, 'Neural Networks'),
+(9, 'Narrow, General, and Superintelligent AI'),
+(10, 'Ethical and Societal Implications of Artificial Intelligence'),
+(11, 'Machine Learning'),
+(12, 'Deep Learning'),
+(13, 'Software Project Managemen'),
+(14, 'Data Protection'),
+(15, 'Software Maintenance'),
+(16, 'Ethical Issues in Software Engineering'),
+(17, 'Environmental Sustainability'),
+(18, 'Social Sustainability'),
+(19, 'Green Technologies and Renewable Energy'),
+(20, 'Sustainable Business Practices');
+
+
+CREATE TABLE `volume` (
+  `name` varchar(100) NOT NULL,
+  `id` varchar(200) NOT NULL PRIMARY KEY,
+  `publicationDate` date DEFAULT NULL,
+  `firstSubOpen` date DEFAULT NULL,
+  `firstSubDeadline` date DEFAULT NULL,
+  `reviewStarts` date DEFAULT NULL,
+  `reviewDeadline` date DEFAULT NULL,
+  `resultsAnnouncement` date DEFAULT NULL,
+  `secondSubOpen` date DEFAULT NULL,
+  `secondSubDeadline` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `volume` (`name`, `id`, `publicationDate`, `firstSubOpen`, `firstSubDeadline`, `reviewStarts`, `reviewDeadline`, `resultsAnnouncement`, `secondSubOpen`, `secondSubDeadline`) VALUES
+('Volume-1', 'Cloud_Computing_Journal_January2022', '2022-01-03', '2021-04-01', '2021-05-15', '2021-05-16', '2021-05-31', '2021-06-21', '2021-06-30', '2021-07-31'),
+('Volume-2', 'Cloud_Computing_Journal_January2023', '2023-01-03', '2022-04-01', '2022-05-15', '2022-05-16', '2022-05-31', '2022-06-21', '2022-06-30', '2022-07-31'),
+('Volume-3', 'Cloud_Computing_Journal_January2024', '2024-01-03', '2023-04-01', '2023-05-15', '2023-05-16', '2023-05-31', '2023-06-21', '2023-06-30', '2023-07-31'),
+('Volume-4', 'Cloud_Computing_Journal_January2025', '2025-01-03', '2024-04-01', '2024-05-15', '2024-05-16', '2024-05-31', '2024-06-21', '2024-06-30', '2024-07-31'),
+('Volume-5', 'Expert_Systems_Journal_January2024', '2024-01-02', '2023-08-01', '2023-09-15', '2023-09-16', '2023-09-30', '2023-10-21', '2023-10-30', '2023-11-30'),
+('Volume-6', 'Expert_Systems_Journal_March2024', '2024-07-02', '2023-12-01', '2024-01-15', '2024-01-16', '2024-01-31', '2024-02-21', '2024-02-28', '2024-03-31'),
+('Volume-7', 'Expert_Systems_Journal_July2024', '2024-03-02', '2023-10-01', '2023-11-15', '2023-11-16', '2023-11-30', '2023-12-21', '2023-12-31', '2024-01-31'),
+('Volume-8', 'Journal_Of_Artificial_Intelligence_January2024', '2024-01-03', '2023-04-01', '2023-05-15', '2023-05-16', '2023-05-31', '2023-06-21', '2023-06-30', '2023-07-31'),
+('Volume-9', 'Software_Engineering_Journal_January2024', '2024-01-03', '2023-04-01', '2023-05-15', '2023-05-16', '2023-05-31', '2023-06-21', '2023-06-30', '2023-07-31'),
+('Volume-10', 'Sustainability_January2024', '2024-01-03', '2023-04-01', '2023-05-15', '2023-05-16', '2023-05-31', '2023-06-21', '2023-06-30', '2023-07-31');
+
+
+CREATE TABLE `volumetheme` (
+  `name` varchar(100) NOT NULL,
+  `id` varchar(200) NOT NULL,
+  `keywid` int(5) NOT NULL,
+  PRIMARY KEY (id, name, keywId),
+  FOREIGN KEY (id) REFERENCES Volume(id),
+  FOREIGN KEY (name) REFERENCES Journal(name),
+  FOREIGN KEY (keywId) REFERENCES Keywords(keywId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `volumetheme`(`name`, `id`, `keywid`) VALUES 
+('Cloud Computing Journal', 'Cloud_Computing_Journal_January2022', 1),
+('Cloud Computing Journal', 'Cloud_Computing_Journal_January2023', 1),
+('Cloud Computing Journal', 'Cloud_Computing_Journal_January2024', 1),
+('Cloud Computing Journal', 'Cloud_Computing_Journal_January2025', 1),
+('Expert Systems Journal', 'Expert_Systems_Journal_January2024', 2),
+('Expert Systems Journal', 'Expert_Systems_Journal_March2024', 2),
+('Expert Systems Journal', 'Expert_Systems_Journal_July2024', 2),
+('Journal Of Artificial Intelligence', 'Journal_Of_Artificial_Intelligence_January2024', 3),
+('Software Engineering Journal', 'Software_Engineering_Journal_January2024', 4),
+('Sustainability', 'Sustainability_January2024', 5);
+
+
+CREATE TABLE `person` (
+  `email` varchar(200) NOT NULL PRIMARY KEY,
+  `name` varchar(200) DEFAULT NULL,
+  `isAuthor` tinyint(1) DEFAULT NULL,
+  `isEditor` tinyint(1) DEFAULT NULL,
+  `isReviewer` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `person`(`email`, `name`, `isAuthor`, `isEditor`, `isReviewer`) VALUES 
+('john.doe@example.com', 'John Doe', 1, 0, 0),
+('jane.smith@example.com', 'Jane Smith', 1, 0, 0),
+('mark.johnson@example.com', 'Mark Johnson', 1, 0, 0),
+('susan.brown@example.com', 'Susan Brown', 1, 0, 0),
+('emily.davis@example.com', 'Emily Davis', 1, 0, 0),
+('alice.smith@example.com', 'Alice Smith', 0, 1, 0),
+('bob.johnson@example.com', 'Bob Johnson', 0, 1, 0),
+('carol.lee@example.com', 'Carol Lee', 0, 1, 0),
+('david.kim@example.com', 'David Kim', 0, 1, 0),
+('eva.brown@example.com', 'Eva Brown', 0, 1, 0),
+('frank.green@example.com', 'Frank Green', 0, 0, 1),
+('grace.white@example.com', 'Grace White', 0, 0, 1),
+('hank.black@example.com', 'Hank Black', 0, 0, 1),
+('ivy.wilson@example.com', 'Ivy Wilson', 0, 0, 1),
+('jack.taylor@example.com', 'Jack Taylor', 0, 0, 1);
+
+
+CREATE TABLE `personinterest` (
+  `email` varchar(200) NOT NULL,
+  `keywid` int(5) NOT NULL,
+  PRIMARY KEY (email, keywId),
+  FOREIGN KEY (email) REFERENCES Person(email),
+  FOREIGN KEY (keywId) REFERENCES Keywords(keywId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `personinterest`(`email`, `keywid`) VALUES 
+('john.doe@example.com', 1),
+('jane.smith@example.com', 5),
+('mark.johnson@example.com', 9),
+('susan.brown@example.com', 13),
+('emily.davis@example.com', 17);
+
+
+CREATE TABLE `article` (
+  `id` varchar(10) NOT NULL PRIMARY KEY,
+  `volid` varchar(200) DEFAULT NULL,
+  `title` varchar(500) NOT NULL,
+  `bodyText` text NOT NULL,
+  `correspAut` varchar(200) DEFAULT NULL,
+  `submissionDate` date DEFAULT NULL,
+  `result` varchar(10) DEFAULT NULL,
+  FOREIGN KEY (volId) REFERENCES Volume(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `article`(`id`, `volid`, `title`, `bodyText`, `correspAut`, `submissionDate`, `result`) VALUES 
+('A1', 'Cloud_Computing_Journal_January2024', 'Article 1 Title', 'Article 1 body text.', 'john.doe@example.com', '2024-01-01', 1),
+('A2', 'Expert_Systems_Journal_March2024', 'Article 2 Title', 'Article 2 body text.', 'jane.smith@example.com', '2024-02-01', 0),
+('A3', 'Journal_Of_Artificial_Intelligence_January2024', 'Article 3 Title', 'Article 3 body text.', 'mark.johnson@example.com', '2024-01-15', 0.5),
+('A4', 'Software_Engineering_Journal_January2024', 'Article 4 Title', 'Article 4 body text.', 'susan.brown@example.com', '2024-01-20', 0.66),
+('A5', 'Sustainability_January2024', 'Article 5 Title', 'Article 5 body text.', 'emily.davis@example.com', '2024-01-25', 0.16),
+('A6', 'Cloud_Computing_Journal_January2024', 'Article 6 Title', 'Article 6 body text.', 'john.doe@example.com', '2024-01-01', 0.75),
+('A7', 'Expert_Systems_Journal_March2024', 'Article 7 Title', 'Article 7 body text.', 'jane.smith@example.com', '2024-02-01', 0.25),
+('A8', 'Journal_Of_Artificial_Intelligence_January2024', 'Article 8 Title', 'Article 8 body text.', 'mark.johnson@example.com', '2024-01-15', 0.5),
+('A9', 'Software_Engineering_Journal_January2024', 'Article 9 Title', 'Article 9 body text.', 'susan.brown@example.com', '2024-01-20', 0.5),
+('A10', 'Sustainability_January2024', 'Article 10 Title', 'Article 10 body text.', 'emily.davis@example.com', '2024-01-25', 1);
+
+
+CREATE TABLE `writtenby` (
+  `id` varchar(10) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  PRIMARY KEY (id, email),
+  FOREIGN KEY (id) REFERENCES Article(id),
+  FOREIGN KEY (email) REFERENCES Person(email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `writtenby`(`id`, `email`) VALUES 
+('A1', 'john.doe@example.com'),
+('A2', 'jane.smith@example.com'),
+('A3', 'mark.johnson@example.com'),
+('A4', 'susan.brown@example.com'),
+('A5', 'emily.davis@example.com'),
+('A6', 'john.doe@example.com'),
+('A7', 'jane.smith@example.com'),
+('A8', 'mark.johnson@example.com'),
+('A9', 'susan.brown@example.com'),
+('A10', 'emily.davis@example.com');
+
+
+CREATE TABLE `articlekeywords` (
+  `email` varchar(200) NOT NULL,
+  `aid` varchar(10) NOT NULL,
+  PRIMARY KEY (aid),
+  FOREIGN KEY (aid) REFERENCES Article(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `articlekeywords`(`email`, `aid`) VALUES 
+('john.doe@example.com', 'A1'),
+('jane.smith@example.com', 'A2'),
+('mark.johnson@example.com', 'A3'),
+('susan.brown@example.com', 'A4'),
+('emily.davis@example.com', 'A5'),
+('john.doe@example.com', 'A6'),
+('jane.smith@example.com', 'A7'),
+('mark.johnson@example.com', 'A8'),
+('susan.brown@example.com', 'A9'),
+('emily.davis@example.com', 'A10');
+
+
+CREATE TABLE `articlereviews` (
+  `id` varchar(10) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `scoreOfTheReviewer` float DEFAULT NULL,
+  FOREIGN KEY (id) REFERENCES Article(id),
+  FOREIGN KEY (email) REFERENCES Person(email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `articlereviews`(`id`, `email`, `scoreOfTheReviewer`) VALUES 
+('A1', 'frank.green@example.com', '1'),
+('A1', 'grace.white@example.com', '1'),
+('A1', 'hank.black@example.com', '1'),
+('A2', 'frank.green@example.com', '0'),
+('A2', 'hank.black@example.com', '0'),
+('A2', 'hank.black@example.com', '0'),
+('A3', 'frank.green@example.com', '0.5'),
+('A3', 'grace.white@example.com', '0.5'),
+('A3', 'hank.black@example.com', '0.5'),
+('A4', 'hank.black@example.com', '1'),
+('A4', 'grace.white@example.com', '0.5'),
+('A4', 'hank.black@example.com', '0.5'),
+('A5', 'frank.green@example.com', '0'),
+('A5', 'grace.white@example.com', '0.5'),
+('A6', 'jack.taylor@example.com', '1'),
+('A6', 'frank.green@example.com', '0.5'),
+('A7', 'grace.white@example.com', '0'),
+('A7', 'hank.black@example.com', '0.5'),
+('A8', 'jack.taylor@example.com', '0.5'),
+('A9', 'hank.black@example.com', '1'),
+('A9', 'hank.black@example.com', '0'),
+('A10', 'jack.taylor@example.com', '1');
+
+
+CREATE TABLE `person_volume` (
+  `email` VARCHAR(200),
+  `vid` VARCHAR(200),
+  PRIMARY KEY (`email`, `vid`),
+  FOREIGN KEY (`email`) REFERENCES person(`email`),
+  FOREIGN KEY (`vid`) REFERENCES volume(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `person_volume` (`email`, `vid`) VALUES
+('john.doe@example.com', 'Cloud_Computing_Journal_January2024'),
+('jane.smith@example.com', 'Expert_Systems_Journal_January2024'),
+('mark.johnson@example.com', 'Journal_Of_Artificial_Intelligence_January2024'),
+('susan.brown@example.com', 'Software_Engineering_Journal_January2024'),
+('emily.davis@example.com', 'Sustainability_January2024'),
+('alice.smith@example.com', 'Cloud_Computing_Journal_January2023'),
+('bob.johnson@example.com', 'Expert_Systems_Journal_March2024'),
+('carol.lee@example.com', 'Expert_Systems_Journal_July2024'),
+('frank.green@example.com', 'Cloud_Computing_Journal_January2022');
