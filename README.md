@@ -1,6 +1,6 @@
 # Journal Management System
 
-This project is a web-based **Journal Management System** developed as part of the Database Systems course using **PHP**, **MySQL (phpMyAdmin)**, and standard web technologies like **HTML**, **CSS**, and **JavaScript**..
+This project is a web-based **Journal Management System** developed as part of the Database Systems course using **PHP**, **MySQL (phpMyAdmin)**, and standard web technologies like **HTML**, **CSS**, and **JavaScript**.
 
 The system provides functionality for managing academic journals, articles, and peer reviews. It supports multiple user roles (author, reviewer, editor), each with specific access and interfaces.
 
